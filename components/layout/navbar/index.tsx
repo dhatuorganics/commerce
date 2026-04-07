@@ -52,7 +52,13 @@ export async function Navbar() {
             <Search />
           </Suspense>
         </div>
-        <div className="flex justify-end md:w-1/3">
+        <div className="flex items-center justify-end gap-3 md:w-1/3">
+          <Link
+            href={`https://${process.env.SHOPIFY_STORE_DOMAIN}/account/login`}
+            className="hidden rounded-md border border-[#CC9966] px-3 py-1.5 text-sm text-[#CC9966] transition-colors hover:bg-[#CC9966] hover:text-white md:block"
+          >
+            Sign In
+          </Link>
           <CartModal />
         </div>
       </div>

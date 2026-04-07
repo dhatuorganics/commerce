@@ -44,7 +44,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${bronela.variable} ${nobel.variable}`}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white font-[family-name:var(--font-nobel)]">
+      <body className="bg-[#FAF7F2] text-[#2C2C2C] selection:bg-[#CC9966] selection:text-white font-[family-name:var(--font-nobel)]">
         <CartProvider cartPromise={cart}>
           <Navbar />
           <main>

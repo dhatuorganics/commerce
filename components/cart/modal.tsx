@@ -246,7 +246,7 @@ function CheckoutButton() {
 
   return (
     <button
-      className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
+      className="block w-full rounded-full bg-[#CC9966] p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100 hover:bg-[#b8864d] transition-colors"
       type="submit"
       disabled={pending}
     >

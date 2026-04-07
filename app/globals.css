@@ -1,14 +1,28 @@
 @import "tailwindcss";
 
-/* Font variables */
+/* Dhatu Brand Theme */
 @theme {
+  /* Fonts */
   --font-heading: var(--font-bronela);
   --font-body: var(--font-nobel);
+
+  /* Brand Colors — Panchabhutas palette */
+  --color-brand-cream:    #FAF7F2;   /* Background */
+  --color-brand-charcoal: #2C2C2C;   /* Primary text & footer bg */
+  --color-brand-gold:     #CC9966;   /* Fire / Earth — primary accent */
+  --color-brand-teal:     #669999;   /* Air — secondary accent */
+  --color-brand-water:    #99CCFF;   /* Water — subtle highlight */
+  --color-brand-grey:     #999999;   /* Space — muted UI */
 }
 
 /* Apply Bronela to all headings */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-bronela);
+}
+
+/* Global link hover color */
+a:hover {
+  color: var(--color-brand-gold);
 }
 
 @plugin "@tailwindcss/container-queries";
