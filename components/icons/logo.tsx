@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import Image from "next/image";
 
 export default function LogoIcon(props: React.ComponentProps<"svg">) {
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src="/logo.png"
       alt={`${process.env.SITE_NAME} logo`}
       width={32}
