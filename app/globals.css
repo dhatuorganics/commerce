@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* Font variables */
+@theme {
+  --font-heading: var(--font-bronela);
+  --font-body: var(--font-nobel);
+}
+
+/* Apply Bronela to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-bronela);
+}
+
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
 
