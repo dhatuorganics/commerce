@@ -20,7 +20,7 @@ const Price = ({
       currencyDisplay: "narrowSymbol",
     }).format(parseFloat(amount))}`}
     <span
-      className={clsx("ml-1 inline hidden", currencyCodeClassName)}
+      className={clsx("ml-1 hidden", currencyCodeClassName)}
     >{`${currencyCode}`}</span>
   </p>
 );

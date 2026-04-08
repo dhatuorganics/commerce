@@ -1,4 +1,3 @@
-import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
 import HeroBanner from "components/hero-banner";
@@ -7,6 +6,7 @@ import PhilosophyStrip from "components/philosophy-strip";
 import TrustBadges from "components/trust-badges";
 import ProductRow from "components/product-row";
 import MarqueeBand from "components/marquee-band";
+import SproutedMarquee from "components/sprouted-marquee";
 
 export const metadata = {
   description:
@@ -40,18 +40,7 @@ export default function HomePage() {
         layout="grid"
       />
 
-      {/* 5. Featured Products */}
-      <ProductRow
-        title="Featured Products"
-        eyebrow="Handpicked for You"
-        collection="featured-products"
-        viewAllHref="/search/featured-products"
-      />
-
-      {/* 6. Featured grid (hidden homepage collection) */}
-      <ThreeItemGrid />
-
-      {/* 7. Daily Essentials */}
+      {/* 6. Daily Essentials — 2-row grid */}
       <ProductRow
         title="Daily Essentials"
         eyebrow="Stock Your Pantry"
@@ -60,13 +49,16 @@ export default function HomePage() {
         layout="grid"
       />
 
-      {/* 8. Philosophy strip */}
+      {/* 7. Sprouted flour marquee — links to product pages */}
+      <SproutedMarquee />
+
+      {/* 8. Living Food — The Sprouted Goodness */}
+      <ThreeItemGrid />
+
+      {/* 9. Philosophy strip */}
       <PhilosophyStrip />
 
-      {/* 9. Product carousel */}
-      <Carousel />
-
-      {/* 9. Footer */}
+      {/* 10. Footer */}
       <Footer />
     </>
   );
