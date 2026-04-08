@@ -1,10 +1,27 @@
 @import "tailwindcss";
 
+/* ── Custom Fonts ─────────────────────────────────────────── */
+@font-face {
+  font-family: "Bronela";
+  src: url("/fonts/Bronela-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nobel";
+  src: url("/fonts/Nobel-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Dhatu Brand Theme */
 @theme {
   /* Fonts */
-  --font-heading: var(--font-bronela);
-  --font-body: var(--font-nobel);
+  --font-bronela: "Bronela", Georgia, serif;
+  --font-nobel:   "Nobel", system-ui, sans-serif;
 
   /* Brand Colors — Panchabhutas palette */
   --color-brand-cream:    #FAF7F2;   /* Background */
@@ -17,7 +34,7 @@
 
 /* Apply Bronela to all headings */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-bronela);
+  font-family: "Bronela", Georgia, serif;
 }
 
 /* Global link hover color */
