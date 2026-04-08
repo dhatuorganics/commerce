@@ -9,13 +9,13 @@ import "./globals.css";
 import { baseUrl } from "lib/utils";
 
 const bronela = localFont({
-  src: "../public/fonts/Bronela-Regular.ttf",
+  src: "./fonts/Bronela-Regular.ttf",
   variable: "--font-bronela",
   display: "swap",
 });
 
 const nobel = localFont({
-  src: "../public/fonts/Nobel-Regular.otf",
+  src: "./fonts/Nobel-Regular.otf",
   variable: "--font-nobel",
   display: "swap",
 });
