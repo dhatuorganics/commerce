@@ -51,10 +51,19 @@ export default function HomePage() {
       {/* 6. Featured grid (hidden homepage collection) */}
       <ThreeItemGrid />
 
-      {/* 7. Philosophy strip */}
+      {/* 7. Daily Essentials */}
+      <ProductRow
+        title="Daily Essentials"
+        eyebrow="Stock Your Pantry"
+        collection="daily-essentials"
+        viewAllHref="/search/daily-essentials"
+        layout="grid"
+      />
+
+      {/* 8. Philosophy strip */}
       <PhilosophyStrip />
 
-      {/* 8. Product carousel */}
+      {/* 9. Product carousel */}
       <Carousel />
 
       {/* 9. Footer */}
