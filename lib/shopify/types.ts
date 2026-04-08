@@ -270,3 +270,23 @@ export type ShopifyProductsOperation = {
     sortKey?: string;
   };
 };
+
+export type Article = {
+  handle: string;
+  title: string;
+  excerpt: string;
+  publishedAt: string;
+  image: Image | null;
+  authorV2: { name: string } | null;
+  blog: { handle: string };
+};
+
+export type ShopifyArticlesOperation = {
+  data: {
+    blogs: Connection<{
+      handle: string;
+      articles: Connection<Article>;
+    }>;
+  };
+  variables: { first: number };
+};

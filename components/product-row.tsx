@@ -8,12 +8,14 @@ export default async function ProductRow({
   collection,
   viewAllHref,
   layout = "scroll",
+  maxItems = 8,
 }: {
   title: string;
   eyebrow: string;
   collection: string;
   viewAllHref: string;
   layout?: "scroll" | "grid";
+  maxItems?: number;
 }) {
   const products = await getCollectionProducts({ collection });
 
@@ -53,7 +55,7 @@ export default async function ProductRow({
         {/* Grid layout — 2 rows, 4 columns */}
         {layout === "grid" ? (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
-            {products.slice(0, 8).map((product) => (
+            {products.slice(0, maxItems).map((product) => (
               <ProductCard key={product.handle} product={product} />
             ))}
           </div>

@@ -26,6 +26,7 @@ import {
 } from "./queries/collection";
 import { getMenuQuery } from "./queries/menu";
 import { getPageQuery, getPagesQuery } from "./queries/page";
+import { getArticlesQuery } from "./queries/blog";
 import {
   getProductQuery,
   getProductRecommendationsQuery,
@@ -47,6 +48,8 @@ import {
   ShopifyCollectionProductsOperation,
   ShopifyCollectionsOperation,
   ShopifyCreateCartOperation,
+  Article,
+  ShopifyArticlesOperation,
   ShopifyMenuOperation,
   ShopifyPageOperation,
   ShopifyPagesOperation,
@@ -500,6 +503,29 @@ export async function getProducts({
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+
+export async function getArticles(count: number = 2): Promise<Article[]> {
+  "use cache";
+  cacheLife("days");
+
+  if (!endpoint) return [];
+
+  const res = await shopifyFetch<ShopifyArticlesOperation>({
+    query: getArticlesQuery,
+    variables: { first: count },
+  });
+
+  // Collect articles from all blogs and sort by date, return top `count`
+  const blogs = removeEdgesAndNodes(res.body?.data?.blogs ?? { edges: [] });
+  const articles: Article[] = [];
+  for (const blog of blogs) {
+    const blogArticles = removeEdgesAndNodes(blog.articles);
+    articles.push(...blogArticles);
+  }
+  return articles
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, count);
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
