@@ -55,8 +55,8 @@ export default function HomePage() {
       <ProductRow
         title="Daily Essentials"
         eyebrow="Stock Your Pantry"
-        collection="daily-essentials"
-        viewAllHref="/search/daily-essentials"
+        collection="everyday-essentials"
+        viewAllHref="/search/everyday-essentials"
         layout="grid"
       />
 
