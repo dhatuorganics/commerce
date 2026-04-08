@@ -10,6 +10,7 @@ import MarqueeBand from "components/marquee-band";
 import SproutedMarquee from "components/sprouted-marquee";
 import BadgeBand from "components/badge-band";
 import BlogSection from "components/blog-section";
+import ReviewsSection from "components/reviews-section";
 
 export const metadata = {
   description:
@@ -25,19 +26,16 @@ export default function HomePage() {
       {/* 1. Hero Banner */}
       <HeroBanner />
 
-      {/* 2. Badge band — brand credibility stats */}
-      <BadgeBand />
-
-      {/* 3. Trust badges */}
+      {/* 2. Trust badges */}
       <TrustBadges />
 
-      {/* 4. Category circles */}
+      {/* 3. Category circles */}
       <CategoryCircles />
 
-      {/* 5. Marquee band — differentiation strip */}
+      {/* 4. Marquee band — differentiation strip */}
       <MarqueeBand />
 
-      {/* 6. Best Selling Products — 2-row grid (8 products) */}
+      {/* 5. Best Selling Products — 2-row grid (8 products) */}
       <ProductRow
         title="Best Selling Products"
         eyebrow="Customer Favourites"
@@ -47,7 +45,7 @@ export default function HomePage() {
         maxItems={8}
       />
 
-      {/* 7. Featured Products — 1-row grid (4 products) */}
+      {/* 6. Featured Products — 1-row grid (4 products) */}
       <ProductRow
         title="Featured Products"
         eyebrow="Handpicked for You"
@@ -56,6 +54,9 @@ export default function HomePage() {
         layout="grid"
         maxItems={4}
       />
+
+      {/* 7. Badge band — brand credibility stats, after featured products */}
+      <BadgeBand />
 
       {/* 8. Daily Essentials — 2-row grid */}
       <ProductRow
@@ -79,10 +80,13 @@ export default function HomePage() {
       {/* 12. Blog section — 2 latest articles */}
       <BlogSection />
 
-      {/* 13. More From Our Range — static grid */}
+      {/* 13. Customer reviews */}
+      <ReviewsSection />
+
+      {/* 14. More From Our Range — static grid */}
       <Carousel />
 
-      {/* 14. Footer */}
+      {/* 15. Footer */}
       <Footer />
     </>
   );
