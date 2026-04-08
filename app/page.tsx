@@ -11,6 +11,7 @@ import SproutedMarquee from "components/sprouted-marquee";
 import BadgeBand from "components/badge-band";
 import BlogSection from "components/blog-section";
 import ReviewsSection from "components/reviews-section";
+import FreshProduceSection from "components/fresh-produce-section";
 
 export const metadata = {
   description:
@@ -68,25 +69,28 @@ export default function HomePage() {
         maxItems={8}
       />
 
-      {/* 9. Sprouted flour marquee — links to product pages */}
+      {/* 9. Fresh Produce — farm-fresh fruits, vegetables, greens & eggs */}
+      <FreshProduceSection />
+
+      {/* 10. Sprouted flour marquee — links to product pages */}
       <SproutedMarquee />
 
-      {/* 10. Living Food — The Sprouted Goodness */}
+      {/* 11. Living Food — The Sprouted Goodness */}
       <ThreeItemGrid />
 
-      {/* 11. Philosophy strip */}
+      {/* 12. Philosophy strip */}
       <PhilosophyStrip />
 
-      {/* 12. Blog section — 2 latest articles */}
+      {/* 13. Blog section — 2 latest articles */}
       <BlogSection />
 
-      {/* 13. Customer reviews */}
+      {/* 14. Customer reviews */}
       <ReviewsSection />
 
-      {/* 14. More From Our Range — static grid */}
+      {/* 15. More From Our Range — static grid */}
       <Carousel />
 
-      {/* 15. Footer */}
+      {/* 16. Footer */}
       <Footer />
     </>
   );
