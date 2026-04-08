@@ -1,3 +1,4 @@
+import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
 import HeroBanner from "components/hero-banner";
@@ -40,7 +41,16 @@ export default function HomePage() {
         layout="grid"
       />
 
-      {/* 6. Daily Essentials — 2-row grid */}
+      {/* 6. Featured Products — grid, no scroll */}
+      <ProductRow
+        title="Featured Products"
+        eyebrow="Handpicked for You"
+        collection="featured-products"
+        viewAllHref="/search/featured-products"
+        layout="grid"
+      />
+
+      {/* 7. Daily Essentials — 2-row grid */}
       <ProductRow
         title="Daily Essentials"
         eyebrow="Stock Your Pantry"
@@ -49,16 +59,19 @@ export default function HomePage() {
         layout="grid"
       />
 
-      {/* 7. Sprouted flour marquee — links to product pages */}
+      {/* 8. Sprouted flour marquee — links to product pages */}
       <SproutedMarquee />
 
-      {/* 8. Living Food — The Sprouted Goodness */}
+      {/* 9. Living Food — The Sprouted Goodness */}
       <ThreeItemGrid />
 
-      {/* 9. Philosophy strip */}
+      {/* 10. Philosophy strip */}
       <PhilosophyStrip />
 
-      {/* 10. Footer */}
+      {/* 11. More From Our Range — static grid */}
+      <Carousel />
+
+      {/* 12. Footer */}
       <Footer />
     </>
   );
