@@ -5,44 +5,44 @@ const categories = [
   {
     label: "Sprouted Flours",
     handle: "sprouted-flours",
-    image: "https://images.unsplash.com/photo-1601343027887-ea83648bc320?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Artisan flour and dough",
+    image: "https://images.unsplash.com/photo-1714842981153-ffeaf74e7a1a?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "A bowl of flour",
   },
   {
     label: "Nut Butters",
     handle: "nut-butters",
-    image: "https://images.unsplash.com/photo-1508088375255-38311cbd66c3?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Creamy nut butter",
+    image: "https://images.unsplash.com/photo-1564988208558-9270de7c5848?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "Peanut butter with a black spoon",
   },
   {
     label: "Millets",
     handle: "millets",
-    image: "https://images.unsplash.com/photo-1518795714924-e76a4cadd99a?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Ancient millet grains",
+    image: "https://images.unsplash.com/photo-1768729341679-8a2da8e5b5fa?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "Close-up of dried millet seeds",
   },
   {
     label: "Spices",
     handle: "spices",
-    image: "https://images.unsplash.com/photo-1574586595680-e7388293c9bb?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Colourful spice bowls",
+    image: "https://images.unsplash.com/photo-1699210260087-347545f89de6?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "Colourful spice powders in bowls",
   },
   {
     label: "Herbal Supplements",
     handle: "herbal-supplements",
-    image: "https://images.unsplash.com/photo-1594134858547-8b126843389e?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Dried herbs and botanicals",
+    image: "https://images.unsplash.com/photo-1768700439764-9ec0ba31ae75?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "Mortar and pestle with herbal ingredients",
   },
   {
     label: "Oils & Ghee",
     handle: "oils-ghee",
-    image: "https://images.unsplash.com/photo-1491833167315-f2f6c7c5deab?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Golden oils and ghee",
+    image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "Glass oil bottle",
   },
   {
     label: "Rice",
     handle: "rice",
-    image: "https://images.unsplash.com/photo-1630572182999-f1e5bc8557eb?w=400&h=400&fit=crop&auto=format&q=80",
-    alt: "Pure white rice grains",
+    image: "https://images.unsplash.com/photo-1705147271933-5c7052f15a90?w=400&h=400&fit=crop&auto=format&q=80",
+    alt: "A bowl of white rice",
   },
 ];
 
@@ -88,7 +88,7 @@ export default function CategoryCircles() {
                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                 sizes="112px"
               />
-              {/* Subtle gold overlay on hover */}
+              {/* Subtle overlay on hover */}
               <div
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: "linear-gradient(135deg, #CC996615, #66999915)" }}
