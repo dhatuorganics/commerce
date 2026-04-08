@@ -116,7 +116,7 @@ export default function ProductCard({ product }: { product: Product }) {
             disabled={!isAvailable}
             className="w-full rounded-full py-2.5 text-xs font-medium uppercase tracking-widest text-white transition-all hover:opacity-90 hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50"
             style={{
-              backgroundColor: isAvailable ? "#CC9966" : "#999999",
+              backgroundColor: isAvailable ? "#2D5A27" : "#999999",
               fontFamily: "var(--font-nobel)",
             }}
           >
