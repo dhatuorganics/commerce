@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const keywords = [
@@ -15,30 +16,39 @@ const stats = [
 
 export default function HeroBanner() {
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      style={{ backgroundColor: "#2C2C2C", minHeight: "300px" }}
-    >
-      {/* Subtle gradient blobs */}
+    <section className="relative w-full overflow-hidden" style={{ minHeight: "380px" }}>
+
+      {/* Background image */}
+      <Image
+        src="/hero-banner.jpeg"
+        alt="Dhatu Organics hero banner"
+        fill
+        className="object-cover object-center"
+        priority
+        sizes="100vw"
+      />
+
+      {/* Dark overlay for text legibility */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "radial-gradient(ellipse at 5% 80%, #CC996615 0%, transparent 45%), radial-gradient(ellipse at 95% 10%, #66999915 0%, transparent 45%)",
+          background:
+            "linear-gradient(to right, rgba(44,44,44,0.82) 0%, rgba(44,44,44,0.65) 55%, rgba(44,44,44,0.35) 100%)",
         }}
       />
 
       {/* Gold top line */}
       <div className="absolute top-0 inset-x-0 h-[2px]" style={{ backgroundColor: "#CC9966" }} />
 
-      <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between px-6 md:px-16 py-8 gap-8">
+      {/* Content */}
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between px-6 md:px-16 py-10 gap-8">
 
         {/* LEFT — Main content */}
         <div className="flex-1 max-w-xl">
           {/* Eyebrow */}
           <span
             className="mb-4 inline-block rounded-full border px-4 py-1 text-[10px] uppercase tracking-[0.3em]"
-            style={{ borderColor: "#CC996650", color: "#CC9966", fontFamily: "var(--font-nobel)" }}
+            style={{ borderColor: "#CC996660", color: "#CC9966", fontFamily: "var(--font-nobel)" }}
           >
             Organic &amp; Naturals · Since 2010
           </span>
@@ -52,13 +62,17 @@ export default function HeroBanner() {
             <span style={{ color: "#CC9966" }}>Wholesome</span>
           </h1>
 
-          {/* Keyword badges — the creative part */}
+          {/* Keyword badges */}
           <div className="mb-5 flex flex-wrap gap-2">
             {keywords.map((kw) => (
               <div
                 key={kw.word}
                 className="flex items-center gap-1.5 rounded-full border px-3 py-1"
-                style={{ borderColor: `${kw.color}50`, backgroundColor: `${kw.color}12` }}
+                style={{
+                  borderColor: `${kw.color}50`,
+                  backgroundColor: `${kw.color}18`,
+                  backdropFilter: "blur(4px)",
+                }}
               >
                 <span
                   className="h-1.5 w-1.5 rounded-full flex-shrink-0"
@@ -72,7 +86,7 @@ export default function HeroBanner() {
                 </span>
                 <span
                   className="hidden text-[10px] md:inline"
-                  style={{ color: "#FAF7F260", fontFamily: "var(--font-nobel)" }}
+                  style={{ color: "#FAF7F270", fontFamily: "var(--font-nobel)" }}
                 >
                   — {kw.desc}
                 </span>
@@ -83,7 +97,7 @@ export default function HeroBanner() {
           {/* Subtext */}
           <p
             className="mb-6 text-sm leading-relaxed"
-            style={{ color: "#999999", fontFamily: "var(--font-nobel)" }}
+            style={{ color: "#FAF7F2AA", fontFamily: "var(--font-nobel)" }}
           >
             Blending traditional Ayurvedic wisdom with modern science — pure,
             organic, and science-backed nutrition from our farm to your table.
@@ -99,9 +113,9 @@ export default function HeroBanner() {
               Shop Now
             </Link>
             <Link
-              href="/search"
+              href="/pages/about"
               className="rounded-full border px-7 py-2.5 text-xs font-medium uppercase tracking-widest transition-all hover:bg-white/10"
-              style={{ borderColor: "#FAF7F230", color: "#FAF7F2", fontFamily: "var(--font-nobel)" }}
+              style={{ borderColor: "#FAF7F240", color: "#FAF7F2", fontFamily: "var(--font-nobel)" }}
             >
               Our Story
             </Link>
@@ -111,7 +125,7 @@ export default function HeroBanner() {
         {/* RIGHT — Stats */}
         <div
           className="flex flex-row gap-8 md:flex-col md:gap-5 md:border-l md:pl-12"
-          style={{ borderColor: "#CC996630" }}
+          style={{ borderColor: "#CC996640" }}
         >
           {stats.map((stat) => (
             <div key={stat.value} className="text-center md:text-left">
@@ -123,7 +137,7 @@ export default function HeroBanner() {
               </div>
               <div
                 className="mt-1 text-[10px] uppercase tracking-wider whitespace-pre-line leading-relaxed"
-                style={{ color: "#999999", fontFamily: "var(--font-nobel)" }}
+                style={{ color: "#FAF7F280", fontFamily: "var(--font-nobel)" }}
               >
                 {stat.label}
               </div>
@@ -133,7 +147,7 @@ export default function HeroBanner() {
       </div>
 
       {/* Gold bottom line */}
-      <div className="absolute bottom-0 inset-x-0 h-[1px]" style={{ backgroundColor: "#CC996630" }} />
+      <div className="absolute bottom-0 inset-x-0 h-[1px]" style={{ backgroundColor: "#CC996640" }} />
     </section>
   );
 }
