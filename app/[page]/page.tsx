@@ -2,6 +2,7 @@ import { GridTileImage } from "components/grid/tile";
 import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
 import { ProductDescription } from "components/product/product-description";
+import { StickyAddToCart } from "components/product/sticky-add-to-cart";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { getProduct, getProductRecommendations } from "lib/shopify";
 import type { Image } from "lib/shopify/types";
@@ -106,6 +107,10 @@ export default async function ProductPage(props: {
         <RelatedProducts id={product.id} />
       </div>
       <Footer />
+      {/* Sticky Add to Cart bar — appears when user scrolls past the ATC button */}
+      <Suspense fallback={null}>
+        <StickyAddToCart product={product} />
+      </Suspense>
     </>
   );
 }
