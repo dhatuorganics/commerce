@@ -61,6 +61,169 @@ a:hover {
   }
 }
 
+/* ── Product Description Prose ─────────────────────────────── */
+/*
+ * Styles for Shopify product descriptionHtml.
+ * We deliberately avoid the Tailwind `prose` class here so we
+ * can apply Dhatu brand fonts & colours precisely.
+ */
+
+.product-prose {
+  font-family: var(--font-nobel);
+  font-size: 0.875rem;    /* 14px */
+  line-height: 1.75;
+  color: #555555;
+}
+
+/* Headings */
+.product-prose h1,
+.product-prose h2,
+.product-prose h3,
+.product-prose h4,
+.product-prose h5,
+.product-prose h6 {
+  font-family: var(--font-bronela);
+  color: #2C2C2C;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.product-prose h2 { font-size: 1.125rem; }
+.product-prose h3 { font-size: 1rem; }
+.product-prose h4, .product-prose h5, .product-prose h6 { font-size: 0.875rem; }
+
+/* Paragraphs */
+.product-prose p {
+  margin-top: 0;
+  margin-bottom: 0.875rem;
+}
+.product-prose p:last-child { margin-bottom: 0; }
+
+/* Bold */
+.product-prose strong, .product-prose b {
+  font-weight: 600;
+  color: #2C2C2C;
+}
+
+/* Italic */
+.product-prose em { color: #555555; }
+
+/* Links */
+.product-prose a {
+  color: #CC9966;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.product-prose a:hover { color: #b8864d; }
+
+/* Unordered lists */
+.product-prose ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.product-prose ul li {
+  padding-left: 1.25rem;
+  position: relative;
+}
+.product-prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #CC9966;
+}
+
+/* Ordered lists */
+.product-prose ol {
+  list-style: none;
+  counter-reset: ol-counter;
+  padding-left: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.product-prose ol li {
+  padding-left: 1.5rem;
+  position: relative;
+  counter-increment: ol-counter;
+}
+.product-prose ol li::before {
+  content: counter(ol-counter) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: #CC9966;
+  font-size: 0.75rem;
+  top: 0.05em;
+}
+
+/* Nested lists */
+.product-prose ul ul,
+.product-prose ol ol { margin-top: 0.25rem; margin-bottom: 0; }
+
+/* Tables */
+.product-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin: 1rem 0;
+}
+.product-prose th {
+  background-color: #FAF7F2;
+  color: #2C2C2C;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #EDE8E1;
+  font-family: var(--font-nobel);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.product-prose td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #EDE8E1;
+  color: #555555;
+  vertical-align: top;
+}
+.product-prose tr:nth-child(even) td { background-color: #FDFCFA; }
+
+/* Horizontal rule */
+.product-prose hr {
+  border: none;
+  border-top: 1px solid #EDE8E1;
+  margin: 1.25rem 0;
+}
+
+/* Blockquote */
+.product-prose blockquote {
+  border-left: 3px solid #CC9966;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: #FAF7F2;
+  color: #777777;
+  font-style: italic;
+}
+
+/* Inline code */
+.product-prose code {
+  background-color: #F5F0E8;
+  color: #C75B21;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+}
+
 @supports (font: -apple-system-body) and (-webkit-appearance: none) {
   img[loading="lazy"] {
     clip-path: inset(0.6px);
