@@ -12,6 +12,7 @@ import BadgeBand from "components/badge-band";
 import BlogSection from "components/blog-section";
 import ReviewsSection from "components/reviews-section";
 import FreshProduceSection from "components/fresh-produce-section";
+import { FreshProduceGate } from "components/fresh-produce-gate";
 
 export const metadata = {
   description:
@@ -69,8 +70,10 @@ export default function HomePage() {
         maxItems={8}
       />
 
-      {/* 9. Fresh Produce — farm-fresh fruits, vegetables, greens & eggs */}
-      <FreshProduceSection />
+      {/* 9. Fresh Produce — gate by location (Bangalore & Mysore only) */}
+      <FreshProduceGate>
+        <FreshProduceSection />
+      </FreshProduceGate>
 
       {/* 10. Sprouted flour marquee — links to product pages */}
       <SproutedMarquee />

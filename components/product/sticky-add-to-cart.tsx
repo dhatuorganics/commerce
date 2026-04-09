@@ -6,13 +6,12 @@ import { useCart } from "components/cart/cart-context";
 import Price from "components/price";
 import { Product, ProductVariant } from "lib/shopify/types";
 import { useSearchParams } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState } from "react";
 
 export function StickyAddToCart({ product }: { product: Product }) {
   const { variants, availableForSale } = product;
   const { addCartItem } = useCart();
   const searchParams = useSearchParams();
-  const [visible, setVisible] = useState(false);
   const [message, formAction] = useActionState(addItem, null);
 
   // Determine selected variant (same logic as AddToCart)
@@ -26,18 +25,8 @@ export function StickyAddToCart({ product }: { product: Product }) {
   const addItemAction = formAction.bind(null, selectedVariantId);
   const finalVariant = variants.find((v) => v.id === selectedVariantId)!;
 
-  // Show bar once user scrolls past ~400px
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  if (!visible) return null;
-
-  const price = product.priceRange.maxVariantPrice;
   const isDisabled = !availableForSale || !selectedVariantId;
+  const price = product.priceRange.maxVariantPrice;
 
   return (
     <div
