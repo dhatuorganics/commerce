@@ -1,5 +1,6 @@
 import CartModal from "components/cart/modal";
 import LogoSquare from "components/logo-square";
+import { MegaMenu } from "components/mega-menu";
 import { getMenu } from "lib/shopify";
 import { Menu } from "lib/shopify/types";
 import Link from "next/link";
@@ -31,17 +32,17 @@ export async function Navbar() {
         boxShadow: "0 2px 16px rgba(44,44,44,0.06)",
       }}
     >
-      {/* Main nav row: logo | search | cart */}
+      {/* Main nav row */}
       <nav className="flex items-center justify-between px-4 py-3 lg:px-6">
-        {/* Mobile: hamburger menu */}
+        {/* Mobile: hamburger */}
         <div className="block flex-none md:hidden">
           <Suspense fallback={null}>
             <MobileMenu menu={menu} />
           </Suspense>
         </div>
 
-        {/* Logo */}
-        <div className="flex flex-1 items-center">
+        {/* Left: Logo + Shop mega-menu + any Shopify menu items */}
+        <div className="flex flex-1 items-center gap-4">
           <Link
             href="/"
             prefetch={true}
@@ -56,15 +57,19 @@ export async function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop: Shopify menu items (if any) */}
+          {/* Mega-menu Shop trigger — desktop only */}
+          <MegaMenu />
+
+          {/* Additional Shopify menu items */}
           {menu.length ? (
-            <ul className="ml-8 hidden gap-6 text-sm md:flex md:items-center">
+            <ul className="hidden gap-5 text-xs md:flex md:items-center">
               {menu.map((item: Menu) => (
                 <li key={item.title}>
                   <Link
                     href={item.path}
                     prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-[#CC9966] hover:underline transition-colors"
+                    className="font-medium tracking-wide text-neutral-500 transition-colors hover:text-[#CC9966]"
+                    style={{ fontFamily: "var(--font-nobel)" }}
                   >
                     {item.title}
                   </Link>
@@ -74,14 +79,14 @@ export async function Navbar() {
           ) : null}
         </div>
 
-        {/* Search */}
+        {/* Centre: Search */}
         <div className="hidden flex-1 justify-center md:flex">
           <Suspense fallback={<SearchSkeleton />}>
             <Search />
           </Suspense>
         </div>
 
-        {/* Sign In + Cart */}
+        {/* Right: Sign In + Cart */}
         <div className="flex flex-1 items-center justify-end gap-3">
           <Link
             href={`https://${process.env.SHOPIFY_STORE_DOMAIN}/account/login`}
