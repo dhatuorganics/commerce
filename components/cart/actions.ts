@@ -14,14 +14,16 @@ import { redirect } from "next/navigation";
 
 export async function addItem(
   prevState: any,
-  selectedVariantId: string | undefined
+  payload: { variantId: string | undefined; quantity: number }
 ) {
-  if (!selectedVariantId) {
+  const { variantId, quantity = 1 } = payload ?? {};
+
+  if (!variantId) {
     return "Error adding item to cart";
   }
 
   try {
-    await addToCart([{ merchandiseId: selectedVariantId, quantity: 1 }]);
+    await addToCart([{ merchandiseId: variantId, quantity }]);
     updateTag(TAGS.cart);
   } catch (e) {
     return "Error adding item to cart";
@@ -84,7 +86,6 @@ export async function updateItemQuantity(
         ]);
       }
     } else if (quantity > 0) {
-      // If the item doesn't exist in the cart and quantity > 0, add it
       await addToCart([{ merchandiseId, quantity }]);
     }
 

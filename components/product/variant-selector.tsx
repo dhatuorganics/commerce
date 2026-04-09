@@ -47,18 +47,21 @@ export function VariantSelector({
 
   return options.map((option) => (
     <form key={option.id}>
-      <dl className="mb-8">
-        <dt className="mb-4 text-sm uppercase tracking-wide">{option.name}</dt>
-        <dd className="flex flex-wrap gap-3">
+      <dl className="mb-6">
+        <dt
+          className="mb-3 text-xs uppercase tracking-[0.15em]"
+          style={{ fontFamily: "var(--font-nobel)", color: "#888888" }}
+        >
+          {option.name}
+        </dt>
+        <dd className="flex flex-wrap gap-2">
           {option.values.map((value) => {
             const optionNameLowerCase = option.name.toLowerCase();
 
-            // Base option params on current searchParams so we can preserve any other param state.
             const optionParams: Record<string, string> = {};
             searchParams.forEach((v, k) => (optionParams[k] = v));
             optionParams[optionNameLowerCase] = value;
 
-            // Filter out invalid options and check if the option combination is available for sale.
             const filtered = Object.entries(optionParams).filter(
               ([key, value]) =>
                 options.find(
@@ -74,7 +77,6 @@ export function VariantSelector({
               ),
             );
 
-            // The option is active if it's in the selected options.
             const isActive = searchParams.get(optionNameLowerCase) === value;
 
             return (
@@ -85,15 +87,19 @@ export function VariantSelector({
                 disabled={!isAvailableForSale}
                 title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""}`}
                 className={clsx(
-                  "flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900",
+                  "min-w-[56px] rounded-full px-4 py-2 text-sm font-medium transition-all duration-200",
                   {
-                    "cursor-default ring-2 ring-blue-600": isActive,
-                    "ring-1 ring-transparent transition duration-300 ease-in-out hover:ring-blue-600":
+                    // Active state: filled gold
+                    "bg-[#CC9966] text-white shadow-sm": isActive,
+                    // Inactive available: outline
+                    "border border-[#E0D5C8] bg-white text-[#2C2C2C] hover:border-[#CC9966] hover:text-[#CC9966]":
                       !isActive && isAvailableForSale,
-                    "relative z-10 cursor-not-allowed overflow-hidden bg-neutral-100 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-neutral-900 dark:text-neutral-400 dark:ring-neutral-700 dark:before:bg-neutral-700":
+                    // Out of stock: muted strikethrough
+                    "relative cursor-not-allowed border border-[#E8E8E8] bg-[#F8F8F8] text-[#BBBBBB] before:absolute before:inset-x-2 before:top-1/2 before:h-px before:-rotate-12 before:bg-[#CCCCCC]":
                       !isAvailableForSale,
                   },
                 )}
+                style={{ fontFamily: "var(--font-nobel)" }}
               >
                 {value}
               </button>

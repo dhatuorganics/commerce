@@ -22,11 +22,19 @@ export function StickyAddToCart({ product }: { product: Product }) {
   );
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const selectedVariantId = variant?.id || defaultVariantId;
-  const addItemAction = formAction.bind(null, selectedVariantId);
+  const addItemAction = formAction.bind(null, {
+    variantId: selectedVariantId,
+    quantity: 1,
+  });
   const finalVariant = variants.find((v) => v.id === selectedVariantId)!;
 
   const isDisabled = !availableForSale || !selectedVariantId;
   const price = product.priceRange.maxVariantPrice;
+
+  // Show selected variant label (e.g. "500g") if available
+  const variantLabel = finalVariant?.title && finalVariant.title !== "Default Title"
+    ? finalVariant.title
+    : null;
 
   return (
     <div
@@ -47,6 +55,18 @@ export function StickyAddToCart({ product }: { product: Product }) {
             style={{ fontFamily: "var(--font-nobel)", color: "#2C2C2C" }}
           >
             {product.title}
+            {variantLabel && (
+              <span
+                className="ml-2 rounded-full px-2 py-0.5 text-[10px]"
+                style={{
+                  backgroundColor: "#F0E8DC",
+                  color: "#CC9966",
+                  fontFamily: "var(--font-nobel)",
+                }}
+              >
+                {variantLabel}
+              </span>
+            )}
           </p>
           <p
             className="text-sm font-semibold"
