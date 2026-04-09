@@ -19,7 +19,10 @@ export default function ProductCard({ product }: { product: Product }) {
   const hasMultipleVariants = product.variants.length > 1;
   const isAvailable = selectedVariant?.availableForSale ?? false;
 
-  const addItemAction = formAction.bind(null, selectedVariant?.id);
+  const addItemAction = formAction.bind(null, {
+    variantId: selectedVariant?.id,
+    quantity: 1,
+  });
 
   return (
     <div
