@@ -1,3 +1,4 @@
+import { AnimateIn } from "components/animate-in";
 import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
@@ -13,6 +14,7 @@ import BlogSection from "components/blog-section";
 import ReviewsSection from "components/reviews-section";
 import FreshProduceSection from "components/fresh-produce-section";
 import { FreshProduceGate } from "components/fresh-produce-gate";
+import VideoSection from "components/video-section";
 
 export const metadata = {
   description:
@@ -25,75 +27,102 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* 1. Hero Banner */}
+      {/* 1. Hero Banner — parallax built-in */}
       <HeroBanner />
 
       {/* 2. Trust badges */}
-      <TrustBadges />
+      <AnimateIn direction="up" delay={0}>
+        <TrustBadges />
+      </AnimateIn>
 
       {/* 3. Category circles */}
-      <CategoryCircles />
+      <AnimateIn direction="up" delay={60}>
+        <CategoryCircles />
+      </AnimateIn>
 
-      {/* 4. Marquee band — differentiation strip */}
+      {/* 4. Marquee band */}
       <MarqueeBand />
 
-      {/* 5. Best Selling Products — 2-row grid (8 products) */}
-      <ProductRow
-        title="Best Selling Products"
-        eyebrow="Customer Favourites"
-        collection="best-selling-products"
-        viewAllHref="/search/best-selling-products"
-        layout="grid"
-        maxItems={8}
-      />
+      {/* 5. Best Selling Products */}
+      <AnimateIn direction="up" delay={0}>
+        <ProductRow
+          title="Best Selling Products"
+          eyebrow="Customer Favourites"
+          collection="best-selling-products"
+          viewAllHref="/search/best-selling-products"
+          layout="grid"
+          maxItems={8}
+        />
+      </AnimateIn>
 
-      {/* 6. Featured Products — 1-row grid (4 products) */}
-      <ProductRow
-        title="Featured Products"
-        eyebrow="Handpicked for You"
-        collection="featured-products"
-        viewAllHref="/search/featured-products"
-        layout="grid"
-        maxItems={4}
-      />
+      {/* 6. Featured Products */}
+      <AnimateIn direction="up" delay={0}>
+        <ProductRow
+          title="Featured Products"
+          eyebrow="Handpicked for You"
+          collection="featured-products"
+          viewAllHref="/search/featured-products"
+          layout="grid"
+          maxItems={4}
+        />
+      </AnimateIn>
 
-      {/* 7. Badge band — brand credibility stats, after featured products */}
-      <BadgeBand />
+      {/* 7. Badge band */}
+      <AnimateIn direction="none">
+        <BadgeBand />
+      </AnimateIn>
 
-      {/* 8. Daily Essentials — 2-row grid */}
-      <ProductRow
-        title="Daily Essentials"
-        eyebrow="Stock Your Pantry"
-        collection="everyday-essentials"
-        viewAllHref="/search/everyday-essentials"
-        layout="grid"
-        maxItems={8}
-      />
+      {/* 8. Daily Essentials */}
+      <AnimateIn direction="up" delay={0}>
+        <ProductRow
+          title="Daily Essentials"
+          eyebrow="Stock Your Pantry"
+          collection="everyday-essentials"
+          viewAllHref="/search/everyday-essentials"
+          layout="grid"
+          maxItems={8}
+        />
+      </AnimateIn>
 
-      {/* 9. Fresh Produce — gate by location (Bangalore & Mysore only) */}
+      {/* 9. Fresh Produce — location-gated */}
       <FreshProduceGate>
         <FreshProduceSection />
       </FreshProduceGate>
 
-      {/* 10. Sprouted flour marquee — links to product pages */}
+      {/* 10. Sprouted marquee */}
       <SproutedMarquee />
 
-      {/* 11. Living Food — The Sprouted Goodness */}
-      <ThreeItemGrid />
+      {/* 11. Living Food */}
+      <AnimateIn direction="up" delay={0}>
+        <ThreeItemGrid />
+      </AnimateIn>
 
       {/* 12. Philosophy strip */}
-      <PhilosophyStrip />
+      <AnimateIn direction="up" delay={0}>
+        <PhilosophyStrip />
+      </AnimateIn>
 
-      {/* 13. Blog section — 2 latest articles */}
-      <BlogSection />
+      {/* 13. Blog section */}
+      <AnimateIn direction="up" delay={0}>
+        <BlogSection />
+      </AnimateIn>
 
-      {/* 14. Customer reviews */}
-      <ReviewsSection />
+      {/* 14. Video section — "See It. Taste It. Feel It." */}
+      <AnimateIn direction="none" duration={800}>
+        <VideoSection />
+      </AnimateIn>
 
-      {/* 15. More From Our Range — static grid */}
-      <Carousel />
+      {/* 15. Customer reviews */}
+      <AnimateIn direction="up" delay={0}>
+        <ReviewsSection />
+      </AnimateIn>
 
-      {/* 16. Footer */}
+      {/* 16. More From Our Range */}
+      <AnimateIn direction="up" delay={0}>
+        <Carousel />
+      </AnimateIn>
+
+      {/* 17. Footer */}
       <Footer />
     </>
   );

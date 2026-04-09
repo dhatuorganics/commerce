@@ -61,6 +61,58 @@ a:hover {
   }
 }
 
+/* ── Global Animations ────────────────────────────────────── */
+
+@keyframes badgeEntry {
+  from { opacity: 0; transform: scale(0.85) translateY(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgba(204,153,102,0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(204,153,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(204,153,102,0); }
+}
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Badge entrance animation */
+.badge-entry {
+  animation: badgeEntry 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* Tooltip fade in */
+.badge-tooltip {
+  animation: fadeIn 0.15s ease-out both;
+}
+
+/* Pulse ring on interactive elements */
+.pulse-ring:hover {
+  animation: pulseRing 1.2s ease-out infinite;
+}
+
+/* Category circle shimmer on hover */
+.category-circle:hover img {
+  transform: scale(1.1);
+}
+
+/* Product card image zoom */
+.product-card-img {
+  transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+}
+.product-card:hover .product-card-img {
+  transform: scale(1.07);
+}
+
 /* ── Product Description Prose ─────────────────────────────── */
 /*
  * Styles for Shopify product descriptionHtml.
