@@ -27,7 +27,18 @@ export default function FilterList({
     <>
       <nav>
         {title ? (
-          <h3 className="hidden text-xs text-neutral-500 md:block dark:text-neutral-400">
+          <h3
+            className="hidden md:flex items-center gap-2 pb-3 mb-2"
+            style={{
+              borderBottom: "1px solid rgba(204,153,102,0.2)",
+              fontFamily: "var(--font-nobel)",
+              fontSize: "9px",
+              letterSpacing: "0.5em",
+              textTransform: "uppercase",
+              color: "#CC9966",
+            }}
+          >
+            <div style={{ width: "2px", height: "12px", backgroundColor: "#CC9966", borderRadius: "9999px" }} />
             {title}
           </h3>
         ) : null}
