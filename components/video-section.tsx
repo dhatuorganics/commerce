@@ -39,25 +39,21 @@ const VIDEO_ITEMS: VideoItem[] = [
   {
     id: "v1",
     type: "shopify",
-    // Replace with your Shopify CDN video URL
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster: "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=600&h=800&fit=crop&auto=format&q=80",
+    src: "https://cdn.shopify.com/videos/c/o/v/3ff14de0c4c24701a4e9a62a5fa853b1.mp4",
     label: "The Sprouting Process",
     tag: "Behind the Scenes",
   },
   {
     id: "v2",
     type: "shopify",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&h=800&fit=crop&auto=format&q=80",
+    src: "https://cdn.shopify.com/videos/c/o/v/cf5799a7cb9744d1abb3f2c5022beac3.mp4",
     label: "Cold-Pressed in Our Kitchen",
     tag: "Process",
   },
   {
     id: "v3",
     type: "shopify",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&h=800&fit=crop&auto=format&q=80",
+    src: "https://cdn.shopify.com/videos/c/o/v/e7c8e29936fb412c8e8c4c54cddfb74b.mp4",
     label: "Farm to Table",
     tag: "Our Story",
   },
