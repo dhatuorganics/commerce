@@ -101,8 +101,8 @@ export async function Navbar() {
 
       {/* Secondary nav row: page links — desktop only */}
       <div
-        className="hidden md:flex items-center justify-center gap-8 px-6 py-2"
-        style={{ borderTop: "1px solid rgba(204,153,102,0.12)" }}
+        className="hidden md:flex items-center justify-center gap-8 px-6 py-2.5"
+        style={{ backgroundColor: "#3B4E2A", borderTop: "none" }}
       >
         {PAGE_LINKS.map((link) => (
           <Link
@@ -110,7 +110,7 @@ export async function Navbar() {
             href={link.href}
             prefetch={true}
             className="text-xs font-medium tracking-wide transition-colors hover:text-[#CC9966]"
-            style={{ fontFamily: "var(--font-nobel)", color: "#555" }}
+            style={{ fontFamily: "var(--font-nobel)", color: "rgba(250,247,242,0.75)" }}
           >
             {link.label}
           </Link>

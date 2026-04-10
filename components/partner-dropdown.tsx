@@ -49,7 +49,7 @@ export function PartnerDropdown() {
       {/* Trigger */}
       <button
         className="flex items-center gap-1 text-xs font-medium tracking-wide transition-colors hover:text-[#CC9966]"
-        style={{ fontFamily: "var(--font-nobel)", color: open ? "#CC9966" : "#555" }}
+        style={{ fontFamily: "var(--font-nobel)", color: open ? "#CC9966" : "rgba(250,247,242,0.75)" }}
         aria-expanded={open}
       >
         Partner with Us

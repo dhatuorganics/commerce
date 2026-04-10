@@ -184,7 +184,7 @@ export function MegaMenu() {
       {/* ── Dropdown Panel ──────────────────────────────────────────────── */}
       {open && (
         <div
-          className="absolute left-1/2 top-[calc(100%+12px)] z-[100] w-[880px] -translate-x-1/3 overflow-hidden rounded-2xl"
+          className="absolute left-0 top-[calc(100%+12px)] z-[100] w-[880px] overflow-hidden rounded-2xl"
           style={{
             backgroundColor: "#FFFFFF",
             boxShadow: "0 24px 64px rgba(44,44,44,0.14), 0 4px 16px rgba(44,44,44,0.06)",
