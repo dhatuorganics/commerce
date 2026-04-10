@@ -335,14 +335,8 @@ export default function AboutPage() {
               {ELEMENTS.map((el) => (
                 <div
                   key={el.sanskrit}
-                  className="group flex flex-col px-7 py-10 transition-colors duration-300"
+                  className="group flex flex-col px-7 py-10 transition-colors duration-300 hover:bg-[#333333]"
                   style={{ backgroundColor: "#2C2C2C" }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.backgroundColor = "#333";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.backgroundColor = "#2C2C2C";
-                  }}
                 >
                   {/* symbol */}
                   <span
