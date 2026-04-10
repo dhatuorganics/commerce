@@ -24,7 +24,13 @@ const PAGE_LINKS = [
   { label: "Blog", href: "/pages/blog" },
   { label: "Our Restaurant & Stores", href: "/pages/our-restaurant-and-stores" },
   { label: "Events", href: "/pages/events" },
-  { label: "Partner with Us", href: "/pages/partner-with-us" },
+];
+
+const PARTNER_LINKS = [
+  { label: "Exports", href: "/pages/partner-with-us#exports" },
+  { label: "White Labelling", href: "/pages/partner-with-us#white-labelling" },
+  { label: "Franchise", href: "/pages/partner-with-us#franchise" },
+  { label: "Retail Stores", href: "/pages/partner-with-us#retail-stores" },
 ];
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
@@ -32,6 +38,7 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [shopExpanded, setShopExpanded] = useState(true);
+  const [partnerExpanded, setPartnerExpanded] = useState(false);
 
   const openMobileMenu = () => setIsOpen(true);
   const closeMobileMenu = () => setIsOpen(false);
@@ -201,6 +208,54 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Partner with Us accordion */}
+              <div className="px-5 py-4" style={{ borderBottom: "1px solid rgba(204,153,102,0.10)" }}>
+                <button
+                  onClick={() => setPartnerExpanded((v) => !v)}
+                  className="flex w-full items-center justify-between"
+                >
+                  <span
+                    className="text-sm font-medium"
+                    style={{ fontFamily: "var(--font-nobel)", color: "#2C2C2C" }}
+                  >
+                    Partner with Us
+                  </span>
+                  <ChevronDownIcon
+                    className="h-4 w-4 transition-transform duration-200"
+                    style={{
+                      color: "#CC9966",
+                      transform: partnerExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  />
+                </button>
+                {partnerExpanded && (
+                  <ul className="mt-3 flex flex-col gap-0.5">
+                    {PARTNER_LINKS.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          onClick={closeMobileMenu}
+                          className="block rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-[#F0E8DC]"
+                          style={{ fontFamily: "var(--font-nobel)", color: "#2C2C2C" }}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                    <li>
+                      <Link
+                        href="/pages/partner-with-us#contact"
+                        onClick={closeMobileMenu}
+                        className="mt-1 flex items-center gap-1 px-3 py-1.5 text-xs font-medium"
+                        style={{ color: "#CC9966", fontFamily: "var(--font-nobel)" }}
+                      >
+                        Contact us →
+                      </Link>
+                    </li>
+                  </ul>
+                )}
               </div>
 
               {/* Shopify nav items */}

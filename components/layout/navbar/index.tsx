@@ -1,6 +1,7 @@
 import CartModal from "components/cart/modal";
 import LogoSquare from "components/logo-square";
 import { MegaMenu } from "components/mega-menu";
+import { PartnerDropdown } from "components/partner-dropdown";
 import { getMenu } from "lib/shopify";
 import { Menu } from "lib/shopify/types";
 import Link from "next/link";
@@ -15,7 +16,6 @@ const PAGE_LINKS = [
   { label: "Blog", href: "/pages/blog" },
   { label: "Our Restaurant & Stores", href: "/pages/our-restaurant-and-stores" },
   { label: "Events", href: "/pages/events" },
-  { label: "Partner with Us", href: "/pages/partner-with-us" },
 ];
 
 export async function Navbar() {
@@ -115,6 +115,8 @@ export async function Navbar() {
             {link.label}
           </Link>
         ))}
+        {/* Partner with Us — dropdown */}
+        <PartnerDropdown />
       </div>
     </header>
   );
