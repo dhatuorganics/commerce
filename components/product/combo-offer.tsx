@@ -70,18 +70,18 @@ export function ComboOffer({
     <section
       className="mt-12 overflow-hidden rounded-3xl"
       style={{
-        border: "1px solid rgba(204,153,102,0.2)",
-        background: "linear-gradient(135deg, #1A1A1A 0%, #2C2C2C 100%)",
+        border: "1.5px solid rgba(204,153,102,0.35)",
+        background: "linear-gradient(135deg, #FDF6EC 0%, #FAF7F2 60%, #F5EDD8 100%)",
       }}
     >
       {/* Header */}
       <div
         className="flex items-center gap-3 px-6 py-4"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+        style={{ borderBottom: "1px solid rgba(204,153,102,0.15)" }}
       >
         <span
           className="flex h-7 w-7 items-center justify-center rounded-full flex-shrink-0"
-          style={{ backgroundColor: "rgba(204,153,102,0.2)", color: "#CC9966" }}
+          style={{ backgroundColor: "rgba(204,153,102,0.18)", color: "#CC9966" }}
         >
           {/* Flame / hot icon */}
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor">
@@ -97,7 +97,7 @@ export function ComboOffer({
           </p>
           <p
             className="text-[10px]"
-            style={{ color: "rgba(250,247,242,0.45)", fontFamily: "var(--font-nobel)" }}
+            style={{ color: "#999", fontFamily: "var(--font-nobel)" }}
           >
             Customers who bought this also love
           </p>
@@ -105,7 +105,7 @@ export function ComboOffer({
         {/* Savings badge */}
         <div
           className="ml-auto flex-shrink-0 rounded-full px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.15em]"
-          style={{ backgroundColor: "rgba(74,107,60,0.25)", color: "#7EC87A" }}
+          style={{ backgroundColor: "rgba(74,107,60,0.12)", color: "#4A6B3C" }}
         >
           Save {BUNDLE_DISCOUNT_PCT}%
         </div>
@@ -119,7 +119,7 @@ export function ComboOffer({
         {/* Plus connector */}
         <div
           className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-lg font-light"
-          style={{ backgroundColor: "rgba(204,153,102,0.15)", color: "#CC9966" }}
+          style={{ backgroundColor: "rgba(204,153,102,0.2)", color: "#CC9966", border: "1px solid rgba(204,153,102,0.3)" }}
         >
           +
         </div>
@@ -137,20 +137,20 @@ export function ComboOffer({
           <div className="flex items-baseline gap-2">
             <span
               className="text-xl font-semibold"
-              style={{ fontFamily: "var(--font-bronela)", color: "#FAF7F2" }}
+              style={{ fontFamily: "var(--font-bronela)", color: "#1A1A1A" }}
             >
               {formatPrice(discounted.toFixed(2), currency)}
             </span>
             <span
               className="text-sm line-through"
-              style={{ color: "rgba(250,247,242,0.35)", fontFamily: "var(--font-nobel)" }}
+              style={{ color: "#BBBBBB", fontFamily: "var(--font-nobel)" }}
             >
               {formatPrice(combined.toFixed(2), currency)}
             </span>
           </div>
           <p
             className="text-[10px] mt-0.5"
-            style={{ color: "rgba(124,200,122,0.9)", fontFamily: "var(--font-nobel)" }}
+            style={{ color: "#4A6B3C", fontFamily: "var(--font-nobel)" }}
           >
             You save {formatPrice(saving.toFixed(2), currency)} on this bundle
           </p>
@@ -209,7 +209,7 @@ function ProductTile({ product, label }: { product: Product; label: string }) {
       {/* Thumbnail */}
       <div
         className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl"
-        style={{ backgroundColor: "rgba(250,247,242,0.08)", border: "1px solid rgba(255,255,255,0.08)" }}
+        style={{ backgroundColor: "#F5EDD8", border: "1px solid rgba(204,153,102,0.2)" }}
       >
         {product.featuredImage?.url && (
           <Image
@@ -231,7 +231,7 @@ function ProductTile({ product, label }: { product: Product; label: string }) {
         </p>
         <p
           className="line-clamp-2 text-xs font-medium leading-snug"
-          style={{ color: "rgba(250,247,242,0.85)", fontFamily: "var(--font-nobel)" }}
+          style={{ color: "#2C2C2C", fontFamily: "var(--font-nobel)" }}
         >
           {product.title}
         </p>
