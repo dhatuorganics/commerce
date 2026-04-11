@@ -1,5 +1,11 @@
 export type Maybe<T> = T | null;
 
+export type ProductMetafield = {
+  namespace: string;
+  key: string;
+  value: string;
+};
+
 export type Connection<T> = {
   edges: Array<Edge<T>>;
 };
@@ -132,6 +138,7 @@ export type ShopifyProduct = {
   images: Connection<Image>;
   seo: SEO;
   tags: string[];
+  metafields?: (ProductMetafield | null)[];
   updatedAt: string;
 };
 

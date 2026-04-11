@@ -161,6 +161,7 @@ async function ProductExtras({
       {/* ── About This Product ───────────────────────────────── */}
       {descriptionHtml && (
         <div
+          id="about-product"
           className="mt-8 overflow-hidden rounded-2xl"
           style={{ border: "1px solid rgba(204,153,102,0.15)", backgroundColor: "#FAF7F2" }}
         >

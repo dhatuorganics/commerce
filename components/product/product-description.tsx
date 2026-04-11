@@ -10,8 +10,51 @@ import { VariantSelector } from "./variant-selector";
 export function ProductDescription({ product }: { product: Product }) {
   const basePrice = product.priceRange.minVariantPrice;
 
+  /* Helper to extract metafield value by key */
+  const getMeta = (key: string) =>
+    product.metafields?.find((m) => m?.key === key)?.value ?? undefined;
+
   /* Derive a display category from tags or a fallback label */
   const categoryLabel = product.tags[0] || "Organic Whole Food";
+
+  /* Tagline: use metafield if present, else fallback to description */
+  const rawTagline = getMeta("tagline") || product.description || "";
+  const tagline = rawTagline.slice(0, 220);
+  const taglineTruncated = rawTagline.length > 220;
+
+  /* Feature bullets: use metafields if any are present */
+  const metaBullets = [
+    getMeta("bullet_1"),
+    getMeta("bullet_2"),
+    getMeta("bullet_3"),
+    getMeta("bullet_4"),
+  ].filter(Boolean) as string[];
+
+  const defaultBullets = [
+    "100% Certified Organic",
+    "Traditionally processed, nutrient-rich",
+    "Direct from small Indian farms",
+    "No preservatives · No additives",
+  ];
+
+  const featureBullets = metaBullets.length > 0 ? metaBullets : defaultBullets;
+
+  /* Why You'll Love It points */
+  const whyPoints = [1, 2, 3, 4, 5]
+    .map((i) => getMeta(`why_love_it_${i}`))
+    .filter(Boolean) as string[];
+
+  /* Nutrition data object */
+  const nutritionData = {
+    servingSize: getMeta("nutrition_serving_size"),
+    calories: getMeta("nutrition_calories"),
+    proteinG: getMeta("nutrition_protein_g"),
+    carbsG: getMeta("nutrition_carbs_g"),
+    fiberG: getMeta("nutrition_fiber_g"),
+    fatG: getMeta("nutrition_fat_g"),
+    sodiumMg: getMeta("nutrition_sodium_mg"),
+    sugarG: getMeta("nutrition_sugar_g"),
+  };
 
   return (
     <div className="flex flex-col">
@@ -45,7 +88,7 @@ export function ProductDescription({ product }: { product: Product }) {
       </h1>
 
       {/* ── Short description / tagline ───────────────────────── */}
-      {product.description && (
+      {tagline && (
         <p
           className="mb-4 text-sm leading-relaxed"
           style={{
@@ -54,19 +97,25 @@ export function ProductDescription({ product }: { product: Product }) {
             maxWidth: "460px",
           }}
         >
-          {product.description.slice(0, 160)}
-          {product.description.length > 160 ? "…" : ""}
+          {tagline}
+          {taglineTruncated && (
+            <>
+              {"…"}{" "}
+              <a
+                href="#about-product"
+                className="transition-colors hover:underline"
+                style={{ color: "#CC9966" }}
+              >
+                Read more ↓
+              </a>
+            </>
+          )}
         </p>
       )}
 
       {/* ── Feature bullets ───────────────────────────────────── */}
       <ul className="mb-5 flex flex-col gap-1.5">
-        {[
-          "100% Certified Organic",
-          "Traditionally processed, nutrient-rich",
-          "Direct from small Indian farms",
-          "No preservatives · No additives",
-        ].map((bullet) => (
+        {featureBullets.map((bullet) => (
           <li
             key={bullet}
             className="flex items-center gap-2 text-xs"
@@ -171,7 +220,12 @@ export function ProductDescription({ product }: { product: Product }) {
 
       {/* ── Accordions (Why You'll Love It · Ingredients · How To Use) ── */}
       {/* "About This Product" is shown below the combo offer — see page.tsx  */}
-      <ProductAccordions />
+      <ProductAccordions
+        whyLoveItPoints={whyPoints.length ? whyPoints : undefined}
+        ingredients={getMeta("ingredients")}
+        howToUse={getMeta("how_to_use")}
+        nutritionData={nutritionData}
+      />
 
     </div>
   );

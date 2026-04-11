@@ -2,6 +2,10 @@
 
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { NutritionTile } from "./nutrition-tile";
+import type { NutritionData } from "./nutrition-tile";
+
+export type { NutritionData };
 
 type AccordionItem = {
   id: string;
@@ -56,7 +60,7 @@ function AccordionRow({
       {/* Animated content panel */}
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: isOpen ? "600px" : "0px", opacity: isOpen ? 1 : 0 }}
+        style={{ maxHeight: isOpen ? "800px" : "0px", opacity: isOpen ? 1 : 0 }}
       >
         <div
           className="pb-5 text-sm leading-relaxed"
@@ -73,13 +77,32 @@ function AccordionRow({
    "Shipping & Returns" has been removed per brief.
    This component renders: Why You'll Love It · Ingredients · How To Use   */
 export function ProductAccordions({
+  whyLoveItPoints,
   ingredients,
+  howToUse,
+  nutritionData,
 }: {
+  whyLoveItPoints?: string[];
   ingredients?: string;
+  howToUse?: string;
+  nutritionData?: NutritionData;
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
 
   const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id));
+
+  const defaultWhyPoints = [
+    "100% certified organic — no pesticides, no chemicals",
+    "Stone-milled or traditionally processed to preserve nutrients",
+    "Sourced directly from small-scale Indian farmers",
+    "Free from artificial preservatives and additives",
+    "Tested for purity and quality at every stage",
+  ];
+
+  const whyPoints =
+    whyLoveItPoints && whyLoveItPoints.length > 0
+      ? whyLoveItPoints
+      : defaultWhyPoints;
 
   const accordions: AccordionItem[] = [
     {
@@ -91,20 +114,17 @@ export function ProductAccordions({
         </svg>
       ),
       content: (
-        <ul className="flex flex-col gap-2">
-          {[
-            "100% certified organic — no pesticides, no chemicals",
-            "Stone-milled or traditionally processed to preserve nutrients",
-            "Sourced directly from small-scale Indian farmers",
-            "Free from artificial preservatives and additives",
-            "Tested for purity and quality at every stage",
-          ].map((point) => (
-            <li key={point} className="flex items-start gap-2">
-              <span className="mt-0.5 flex-shrink-0 text-[#CC9966]">✦</span>
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="flex flex-col gap-2">
+            {whyPoints.map((point) => (
+              <li key={point} className="flex items-start gap-2">
+                <span className="mt-0.5 flex-shrink-0 text-[#CC9966]">✦</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+          {nutritionData && <NutritionTile data={nutritionData} />}
+        </>
       ),
     },
     {
@@ -133,7 +153,9 @@ export function ProductAccordions({
           <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       ),
-      content: (
+      content: howToUse ? (
+        <p>{howToUse}</p>
+      ) : (
         <p>
           Use as directed on the packaging. Store in a cool, dry place away from direct sunlight.
           Once opened, consume within the recommended period and keep the container tightly sealed
