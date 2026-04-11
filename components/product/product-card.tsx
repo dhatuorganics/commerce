@@ -8,9 +8,7 @@ import Link from "next/link";
 import { useActionState, useState } from "react";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Compact badge colour map — a lightweight subset used on hover overlays.
-   Tags listed here are excluded from display (per brief):
-     "Organic Certified", "Vegetarian"
+   Badge colours — excludes "Organic Certified" and "Vegetarian" per brief.
    ───────────────────────────────────────────────────────────────────────── */
 const EXCLUDED = new Set(["Organic Certified", "Vegetarian"]);
 
@@ -55,14 +53,14 @@ function QuickAddButton({ product }: { product: Product }) {
   const [, formAction] = useActionState(addItem, null);
   const [state, setState] = useState<"idle" | "adding" | "added">("idle");
 
-  const hasVariants =
+  const hasMultipleVariants =
     product.variants.length > 1 &&
-    !(product.variants.length === 1 && product.variants[0]?.title === "Default Title");
+    product.variants[0]?.title !== "Default Title";
 
   const defaultVariant = product.variants[0];
   const inStock = product.availableForSale && !!defaultVariant;
 
-  const handleAdd = async (e: React.MouseEvent) => {
+  const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (!inStock || !defaultVariant || state !== "idle") return;
@@ -73,13 +71,12 @@ function QuickAddButton({ product }: { product: Product }) {
     setTimeout(() => setState("idle"), 1800);
   };
 
-  /* If multiple variants → link to product page */
-  if (hasVariants) {
+  if (hasMultipleVariants) {
     return (
       <Link
         href={`/${product.handle}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-[10px] uppercase tracking-[0.2em] transition-all duration-200 hover:opacity-90"
+        className="flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-[10px] uppercase tracking-[0.2em] shadow-md hover:opacity-90"
         style={{
           backgroundColor: "#CC9966",
           color: "#FAF7F2",
@@ -99,12 +96,9 @@ function QuickAddButton({ product }: { product: Product }) {
       type="button"
       onClick={handleAdd}
       disabled={!inStock || state === "adding"}
-      className="flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:opacity-90 disabled:cursor-not-allowed"
+      className="flex w-full items-center justify-center gap-1.5 rounded-full py-2.5 text-[10px] uppercase tracking-[0.2em] shadow-md transition-all duration-300 hover:opacity-90 disabled:cursor-not-allowed"
       style={{
-        backgroundColor:
-          !inStock ? "#E0D5C8" :
-          state === "added" ? "#4A6B3C" :
-          "#CC9966",
+        backgroundColor: !inStock ? "#E0D5C8" : state === "added" ? "#4A6B3C" : "#CC9966",
         color: !inStock ? "#AAA" : "#FAF7F2",
         fontFamily: "var(--font-nobel)",
       }}
@@ -113,7 +107,7 @@ function QuickAddButton({ product }: { product: Product }) {
         "Out of Stock"
       ) : state === "added" ? (
         <>
-          <svg viewBox="0 0 14 14" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.2">
+          <svg viewBox="0 0 14 14" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M2 7l3.5 3.5L12 3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Added!
@@ -129,7 +123,7 @@ function QuickAddButton({ product }: { product: Product }) {
       ) : (
         <>
           <svg viewBox="0 0 14 14" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M1 1h2l1.5 7h6.5l1-5H4" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M1 1.5h2l1.4 6.5h6.5l1-5H4.5" strokeLinecap="round" strokeLinejoin="round" />
             <circle cx="6.5" cy="12" r="1" fill="currentColor" stroke="none" />
             <circle cx="10.5" cy="12" r="1" fill="currentColor" stroke="none" />
           </svg>
@@ -156,7 +150,6 @@ export function ProductCard({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  /* Filter + cap badges */
   const badges = product.tags
     .filter((t) => !EXCLUDED.has(t) && BADGE_COLORS[t])
     .slice(0, MAX_BADGES)
@@ -164,25 +157,32 @@ export function ProductCard({
 
   const price = parseFloat(product.priceRange.maxVariantPrice.amount);
   const currency = product.priceRange.maxVariantPrice.currencyCode;
-  const priceStr =
-    currency === "INR"
-      ? `₹${price.toFixed(0)}`
-      : `${currency} ${price.toFixed(2)}`;
+  const priceStr = currency === "INR" ? `₹${price.toFixed(0)}` : `${currency} ${price.toFixed(2)}`;
 
   return (
+    /*
+     * Layer stack (bottom → top):
+     *  1. Link (inset-0, z-0)          — full card is clickable / navigates
+     *  2. Badges overlay (z-10)        — top of card, pointer-events:none so clicks pass through to Link
+     *  3. ATC button (z-10)            — bottom of card, pointer-events enabled only when hovered
+     *
+     * IMPORTANT: badges and ATC are SIBLINGS to the Link (not children of the
+     * overflow-hidden image div), so they are never clipped during transition.
+     */
     <div
       className="relative h-full w-full"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* ── 1. Navigation link + image ──────────────────────── */}
       <Link
-        className="relative block h-full w-full"
         href={`/${product.handle}`}
         prefetch={true}
+        className="absolute inset-0 z-0 block"
       >
-        {/* Image container */}
+        {/* overflow-hidden only on the image frame — badges/ATC live outside */}
         <div
-          className="relative h-full w-full overflow-hidden rounded-lg transition-all duration-300"
+          className="absolute inset-0 overflow-hidden rounded-lg transition-all duration-300"
           style={{
             border: hovered ? "1.5px solid #CC9966" : "1.5px solid #E0D5C8",
             backgroundColor: "#FAF7F2",
@@ -195,70 +195,69 @@ export function ProductCard({
               fill
               sizes={sizes}
               priority={priority}
-              className="h-full w-full object-contain transition-transform duration-500"
-              style={{ transform: hovered ? "scale(1.05)" : "scale(1)" }}
+              className="object-contain transition-transform duration-500"
+              style={{ transform: hovered ? "scale(1.05)" : "scale(1)", padding: "4px" }}
             />
           )}
 
-          {/* Title + price label (always visible) */}
+          {/* Title + price label */}
           <div
-            className={`absolute left-0 w-full px-4 pb-4 ${
-              labelPosition === "center" ? "bottom-[35%] lg:px-20" : "bottom-0"
+            className={`absolute left-0 w-full px-3 pb-3 ${
+              labelPosition === "center" ? "bottom-[35%] lg:px-16" : "bottom-0"
             }`}
           >
-            <div className="flex items-center rounded-full border border-white/30 bg-white/75 p-1 text-xs font-semibold text-black backdrop-blur-md">
-              <h3 className="mr-4 line-clamp-2 grow pl-2 leading-none tracking-tight">
+            <div className="flex items-center rounded-full border border-white/30 bg-white/80 p-1 text-xs font-semibold text-black backdrop-blur-md">
+              <h3 className="mr-2 line-clamp-2 grow pl-2 leading-none tracking-tight text-[11px]">
                 {product.title}
               </h3>
               <span
-                className="flex-none rounded-full p-2 text-white"
-                style={{ backgroundColor: "#CC9966", fontFamily: "var(--font-nobel)" }}
+                className="flex-none rounded-full px-2.5 py-1.5 text-white"
+                style={{ backgroundColor: "#CC9966", fontFamily: "var(--font-nobel)", fontSize: "10px" }}
               >
                 {priceStr}
               </span>
             </div>
           </div>
-
-          {/* ── Badge overlay — slides up on hover ────────────── */}
-          {badges.length > 0 && (
-            <div
-              className="absolute left-0 top-0 flex flex-wrap gap-1 p-2.5 transition-all duration-300"
-              style={{
-                opacity: hovered ? 1 : 0,
-                transform: hovered ? "translateY(0)" : "translateY(-6px)",
-              }}
-            >
-              {badges.map(({ tag, style }) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium shadow-sm"
-                  style={{
-                    backgroundColor: style.bg,
-                    color: style.color,
-                    border: `1px solid ${style.dot}33`,
-                    fontFamily: "var(--font-nobel)",
-                    backdropFilter: "blur(4px)",
-                  }}
-                >
-                  <span
-                    className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
-                    style={{ backgroundColor: style.dot }}
-                  />
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </Link>
 
-      {/* ── Quick Add to Cart — slides up on hover ─────────── */}
-      {showATC && (
+      {/* ── 2. Badge overlay — top of card, slides down on hover ── */}
+      {badges.length > 0 && (
         <div
-          className="absolute bottom-[52px] left-0 w-full px-3 transition-all duration-300"
+          className="pointer-events-none absolute left-2.5 right-2.5 top-2.5 z-10 flex flex-wrap gap-1 transition-all duration-300"
           style={{
             opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateY(0)" : "translateY(6px)",
+            transform: hovered ? "translateY(0px)" : "translateY(-8px)",
+          }}
+        >
+          {badges.map(({ tag, style }) => (
+            <span
+              key={tag}
+              className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-semibold shadow-sm"
+              style={{
+                backgroundColor: style.bg,
+                color: style.color,
+                border: `1px solid ${style.dot}44`,
+                fontFamily: "var(--font-nobel)",
+              }}
+            >
+              <span
+                className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                style={{ backgroundColor: style.dot }}
+              />
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* ── 3. Quick Add button — bottom of card, slides up on hover ── */}
+      {showATC && (
+        <div
+          className="absolute bottom-12 left-3 right-3 z-10 transition-all duration-300"
+          style={{
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? "translateY(0px)" : "translateY(8px)",
             pointerEvents: hovered ? "auto" : "none",
           }}
         >
