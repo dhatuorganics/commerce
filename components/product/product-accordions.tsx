@@ -69,11 +69,12 @@ function AccordionRow({
   );
 }
 
+/* "About This Product" now lives below the combo section (in page.tsx).
+   "Shipping & Returns" has been removed per brief.
+   This component renders: Why You'll Love It · Ingredients · How To Use   */
 export function ProductAccordions({
-  description,
   ingredients,
 }: {
-  description?: string;
   ingredients?: string;
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -81,25 +82,6 @@ export function ProductAccordions({
   const toggle = (id: string) => setOpenId((prev) => (prev === id ? null : id));
 
   const accordions: AccordionItem[] = [
-    {
-      id: "description",
-      title: "About This Product",
-      icon: (
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-          <circle cx="8" cy="8" r="6" />
-          <path d="M8 7v4M8 5.5v.5" strokeLinecap="round" />
-        </svg>
-      ),
-      content: description ? (
-        <div
-          className="prose prose-sm max-w-none"
-          dangerouslySetInnerHTML={{ __html: description }}
-          style={{ color: "#555" }}
-        />
-      ) : (
-        <p>Crafted with care from the finest organically-grown ingredients, bringing nature&apos;s goodness directly to your table.</p>
-      ),
-    },
     {
       id: "why",
       title: "Why You'll Love It",
@@ -157,34 +139,6 @@ export function ProductAccordions({
           Once opened, consume within the recommended period and keep the container tightly sealed
           to preserve freshness and nutrients.
         </p>
-      ),
-    },
-    {
-      id: "shipping",
-      title: "Shipping & Returns",
-      icon: (
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
-          <rect x="1" y="5" width="10" height="8" rx="1" />
-          <path d="M11 7h2l2 3v3h-4V7z" />
-          <circle cx="4" cy="13" r="1.2" fill="currentColor" stroke="none" />
-          <circle cx="12" cy="13" r="1.2" fill="currentColor" stroke="none" />
-        </svg>
-      ),
-      content: (
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-3">
-            <span className="mt-0.5 text-[#CC9966] flex-shrink-0">✦</span>
-            <span><strong style={{ color: "#2C2C2C" }}>Free shipping</strong> on orders above ₹499 across India.</span>
-          </div>
-          <div className="flex gap-3">
-            <span className="mt-0.5 text-[#CC9966] flex-shrink-0">✦</span>
-            <span><strong style={{ color: "#2C2C2C" }}>3–5 business days</strong> standard delivery. Express options available at checkout.</span>
-          </div>
-          <div className="flex gap-3">
-            <span className="mt-0.5 text-[#CC9966] flex-shrink-0">✦</span>
-            <span>We accept returns for damaged or incorrect items within <strong style={{ color: "#2C2C2C" }}>7 days</strong> of delivery. Contact us at hello@dhatuorganics.com.</span>
-          </div>
-        </div>
       ),
     },
   ];

@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import { ProductOption, ProductVariant } from "lib/shopify/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 type Combination = {
   id: string;
@@ -22,6 +23,29 @@ export function VariantSelector({
   const hasNoOptionsOrJustOneOption =
     !options.length ||
     (options.length === 1 && options[0]?.values.length === 1);
+
+  /* Auto-select cheapest in-stock variant when no variant is chosen yet */
+  useEffect(() => {
+    if (hasNoOptionsOrJustOneOption) return;
+    // Only act when URL has no option params yet
+    const alreadySelected = options.some((opt) =>
+      searchParams.has(opt.name.toLowerCase()),
+    );
+    if (alreadySelected) return;
+
+    const cheapest = [...variants]
+      .filter((v) => v.availableForSale)
+      .sort((a, b) => parseFloat(a.price.amount) - parseFloat(b.price.amount))[0];
+
+    if (!cheapest) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    cheapest.selectedOptions.forEach((opt) => {
+      params.set(opt.name.toLowerCase(), opt.value);
+    });
+    router.replace(`?${params.toString()}`, { scroll: false });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally runs once on mount
 
   if (hasNoOptionsOrJustOneOption) {
     return null;

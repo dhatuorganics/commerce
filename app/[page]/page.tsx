@@ -117,8 +117,12 @@ export default async function ProductPage(props: {
 
         </div>
 
-        {/* ── Combo Offer + Related Products ────────────────── */}
-        <ProductExtras id={product.id} mainProduct={product} />
+        {/* ── Combo Offer + About + Related Products ────────── */}
+        <ProductExtras
+          id={product.id}
+          mainProduct={product}
+          descriptionHtml={product.descriptionHtml}
+        />
       </div>
 
       <Footer />
@@ -132,17 +136,18 @@ export default async function ProductPage(props: {
 }
 
 /* Fetches recommendations once — first item goes to ComboOffer,
-   remaining items go to the "You May Also Like" grid. */
+   remaining items go to the "You May Also Like" grid.
+   "About This Product" is rendered between combo and related. */
 async function ProductExtras({
   id,
   mainProduct,
+  descriptionHtml,
 }: {
   id: string;
   mainProduct: Parameters<typeof ComboOffer>[0]["mainProduct"];
+  descriptionHtml?: string;
 }) {
   const recs = await getProductRecommendations(id);
-  if (!recs.length) return null;
-
   const [comboProduct, ...rest] = recs;
   const relatedProducts = rest.slice(0, 5);
 
@@ -151,6 +156,40 @@ async function ProductExtras({
       {/* ── Combo Offer ─────────────────────────────────────── */}
       {comboProduct && (
         <ComboOffer mainProduct={mainProduct} comboProduct={comboProduct} />
+      )}
+
+      {/* ── About This Product ───────────────────────────────── */}
+      {descriptionHtml && (
+        <div
+          className="mt-8 overflow-hidden rounded-2xl"
+          style={{ border: "1px solid rgba(204,153,102,0.15)", backgroundColor: "#FAF7F2" }}
+        >
+          <div
+            className="flex items-center gap-3 px-5 py-4"
+            style={{ borderBottom: "1px solid rgba(204,153,102,0.1)" }}
+          >
+            <span
+              className="flex h-7 w-7 items-center justify-center rounded-full flex-shrink-0"
+              style={{ backgroundColor: "rgba(204,153,102,0.12)", color: "#CC9966" }}
+            >
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="8" cy="8" r="6" />
+                <path d="M8 7v4M8 5.5v.5" strokeLinecap="round" />
+              </svg>
+            </span>
+            <h2
+              className="text-[11px] uppercase tracking-[0.2em] font-semibold"
+              style={{ color: "#CC9966", fontFamily: "var(--font-nobel)" }}
+            >
+              About This Product
+            </h2>
+          </div>
+          <div
+            className="prose prose-sm max-w-none px-5 py-5"
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            style={{ color: "#555", fontFamily: "var(--font-nobel)" }}
+          />
+        </div>
       )}
 
       {/* ── You May Also Like ────────────────────────────────── */}

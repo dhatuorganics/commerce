@@ -63,8 +63,8 @@ const CURATED = [
   { label: "New Arrivals", handle: "featured-products" },
   { label: "Daily Essentials", handle: "everyday-essentials" },
   { label: "Living Foods", handle: "living-foods-sprouted-grains-flours" },
-  { label: "Gift Sets", handle: "gift-sets" },
-  { label: "Certified Organic", handle: "organic-certified" },
+  { label: "Natural Sweeteners", handle: "natural-sweeteners" },
+  { label: "Ready To Cook", handle: "ready-to-cook" },
 ];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -156,7 +156,7 @@ export function MegaMenu() {
       <button
         aria-haspopup="true"
         aria-expanded={open}
-        className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200"
+        className="flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-medium transition-all duration-200"
         style={{
           fontFamily: "var(--font-nobel)",
           backgroundColor: open ? "#CC9966" : "transparent",

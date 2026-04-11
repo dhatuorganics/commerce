@@ -169,8 +169,9 @@ export function ProductDescription({ product }: { product: Product }) {
       {/* ── Top review — social proof before accordions ───────── */}
       <FeaturedReview />
 
-      {/* ── Accordions ────────────────────────────────────────── */}
-      <ProductAccordions description={product.descriptionHtml} />
+      {/* ── Accordions (Why You'll Love It · Ingredients · How To Use) ── */}
+      {/* "About This Product" is shown below the combo offer — see page.tsx  */}
+      <ProductAccordions />
 
     </div>
   );

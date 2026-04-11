@@ -19,7 +19,8 @@ function ThreeItemGridItem({
           : "md:col-span-2 md:row-span-1"
       }
     >
-      <div className="relative aspect-square h-full w-full">
+      {/* No h-full — aspect-square alone sets height from width; h-full conflicts when parent row height is auto */}
+      <div className="relative aspect-square w-full">
         <ProductCard
           product={item}
           sizes={
