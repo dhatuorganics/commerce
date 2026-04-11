@@ -1,4 +1,3 @@
-import { GridTileImage } from "components/grid/tile";
 import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
 import { ProductDescription } from "components/product/product-description";
@@ -7,6 +6,7 @@ import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { getProduct, getProductRecommendations } from "lib/shopify";
 import type { Image } from "lib/shopify/types";
 import type { Metadata } from "next";
+import NextImage from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -28,23 +28,9 @@ export async function generateMetadata(props: {
     robots: {
       index: indexable,
       follow: indexable,
-      googleBot: {
-        index: indexable,
-        follow: indexable,
-      },
+      googleBot: { index: indexable, follow: indexable },
     },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
+    openGraph: url ? { images: [{ url, width, height, alt }] } : null,
   };
 }
 
@@ -77,20 +63,43 @@ export default async function ProductPage(props: {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
-      <div className="mx-auto max-w-(--breakpoint-2xl) px-4">
-        <div className="flex flex-col rounded-lg border border-neutral-200 bg-white p-8 md:p-12 lg:flex-row lg:gap-8 dark:border-neutral-800 dark:bg-black">
-          <div className="h-full w-full basis-full lg:basis-4/6">
+
+      {/* ── Breadcrumb ──────────────────────────────────────────── */}
+      <div
+        className="mx-auto max-w-[1400px] px-4 pt-4 pb-2"
+        style={{ borderBottom: "1px solid rgba(204,153,102,0.1)" }}
+      >
+        <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em]" style={{ fontFamily: "var(--font-nobel)", color: "#AAA" }}>
+          <Link href="/" className="transition-colors hover:text-[#CC9966]">Home</Link>
+          <span style={{ color: "#DDD" }}>›</span>
+          {product.productType && (
+            <>
+              <span style={{ color: "#CCC" }}>{product.productType}</span>
+              <span style={{ color: "#DDD" }}>›</span>
+            </>
+          )}
+          <span style={{ color: "#888" }}>{product.title}</span>
+        </nav>
+      </div>
+
+      {/* ── Main 2-column product layout ──────────────────────── */}
+      <div className="mx-auto max-w-[1400px] px-4 py-8 lg:py-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_480px] lg:gap-12 xl:grid-cols-[1fr_520px]">
+
+          {/* Left: Gallery */}
+          <div>
             <Suspense
               fallback={
-                <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
+                <div
+                  className="aspect-square w-full rounded-2xl"
+                  style={{ backgroundColor: "#FAF7F2" }}
+                />
               }
             >
               <Gallery
-                images={product.images.slice(0, 5).map((image: Image) => ({
+                images={product.images.slice(0, 8).map((image: Image) => ({
                   src: image.url,
                   altText: image.altText,
                 }))}
@@ -98,16 +107,22 @@ export default async function ProductPage(props: {
             </Suspense>
           </div>
 
-          <div className="basis-full lg:basis-2/6">
+          {/* Right: Description, variants, ATC, accordions */}
+          <div>
             <Suspense fallback={null}>
               <ProductDescription product={product} />
             </Suspense>
           </div>
+
         </div>
+
+        {/* ── You May Also Like ──────────────────────────────── */}
         <RelatedProducts id={product.id} />
       </div>
+
       <Footer />
-      {/* Sticky Add to Cart bar — appears when user scrolls past the ATC button */}
+
+      {/* Sticky Add-to-Cart bar on scroll */}
       <Suspense fallback={null}>
         <StickyAddToCart product={product} />
       </Suspense>
@@ -117,38 +132,66 @@ export default async function ProductPage(props: {
 
 async function RelatedProducts({ id }: { id: string }) {
   const relatedProducts = await getProductRecommendations(id);
-
   if (!relatedProducts.length) return null;
 
   return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">
-        {relatedProducts.map((product) => (
-          <li
-            key={product.handle}
-            className="aspect-square w-full flex-none min-[475px]:w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5"
+    <section className="mt-16 pt-10" style={{ borderTop: "1px solid rgba(204,153,102,0.15)" }}>
+      {/* Section header */}
+      <div className="mb-6 flex items-center gap-3">
+        <div className="h-px flex-1" style={{ backgroundColor: "rgba(204,153,102,0.2)" }} />
+        <div className="flex items-center gap-2">
+          <span style={{ color: "#CC9966", fontSize: "10px" }}>✦</span>
+          <h2
+            className="text-[10px] uppercase tracking-[0.45em]"
+            style={{ fontFamily: "var(--font-nobel)", color: "#CC9966" }}
           >
-            <Link
-              className="relative h-full w-full"
-              href={`/${product.handle}`}
-              prefetch={true}
-            >
-              <GridTileImage
-                alt={product.title}
-                label={{
-                  title: product.title,
-                  amount: product.priceRange.maxVariantPrice.amount,
-                  currencyCode: product.priceRange.maxVariantPrice.currencyCode,
-                }}
-                src={product.featuredImage?.url}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </Link>
-          </li>
+            You May Also Like
+          </h2>
+          <span style={{ color: "#CC9966", fontSize: "10px" }}>✦</span>
+        </div>
+        <div className="h-px flex-1" style={{ backgroundColor: "rgba(204,153,102,0.2)" }} />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {relatedProducts.slice(0, 5).map((rel) => (
+          <Link
+            key={rel.handle}
+            href={`/${rel.handle}`}
+            prefetch={true}
+            className="group flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+            style={{ border: "1px solid rgba(204,153,102,0.15)", backgroundColor: "#FAF7F2" }}
+          >
+            {/* Image */}
+            <div className="relative aspect-square overflow-hidden" style={{ backgroundColor: "#F5F0E8" }}>
+              {rel.featuredImage?.url && (
+                <NextImage
+                  alt={rel.title}
+                  src={rel.featuredImage.url}
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
+                  className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
+            </div>
+            {/* Info */}
+            <div className="flex flex-col gap-1 p-3">
+              <p
+                className="line-clamp-2 text-xs font-medium leading-snug"
+                style={{ fontFamily: "var(--font-nobel)", color: "#2C2C2C" }}
+              >
+                {rel.title}
+              </p>
+              <p
+                className="text-xs font-semibold"
+                style={{ fontFamily: "var(--font-nobel)", color: "#CC9966" }}
+              >
+                {rel.priceRange.minVariantPrice.currencyCode === "INR" ? "₹" : ""}
+                {parseFloat(rel.priceRange.minVariantPrice.amount).toFixed(0)}
+              </p>
+            </div>
+          </Link>
         ))}
-      </ul>
-    </div>
+      </div>
+    </section>
   );
 }

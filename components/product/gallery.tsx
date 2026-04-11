@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { GridTileImage } from "components/grid/tile";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -16,81 +14,119 @@ export function Gallery({
     ? parseInt(searchParams.get("image")!)
     : 0;
 
-  const updateImage = (index: string) => {
+  const updateImage = (index: number) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("image", index);
+    params.set("image", index.toString());
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
-  const nextImageIndex = imageIndex + 1 < images.length ? imageIndex + 1 : 0;
-  const previousImageIndex =
-    imageIndex === 0 ? images.length - 1 : imageIndex - 1;
-
-  const buttonClassName =
-    "h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center";
+  const activeImage = images[imageIndex] ?? images[0];
 
   return (
-    <form>
-      <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
-        {images[imageIndex] && (
+    <div className="flex flex-col gap-3 lg:sticky lg:top-[90px]">
+      {/* ── Main image ─────────────────────────────────────────── */}
+      <div
+        className="relative w-full overflow-hidden rounded-2xl"
+        style={{
+          aspectRatio: "1 / 1",
+          backgroundColor: "#FAF7F2",
+          border: "1px solid rgba(204,153,102,0.15)",
+        }}
+      >
+        {activeImage && (
           <Image
-            className="h-full w-full object-contain"
+            className="h-full w-full object-contain transition-opacity duration-300"
             fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            alt={images[imageIndex]?.altText as string}
-            src={images[imageIndex]?.src as string}
+            sizes="(min-width: 1024px) 55vw, 100vw"
+            alt={activeImage.altText || "Product image"}
+            src={activeImage.src}
             priority={true}
           />
         )}
 
-        {images.length > 1 ? (
-          <div className="absolute bottom-[15%] flex w-full justify-center">
-            <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur-sm dark:border-black dark:bg-neutral-900/80">
-              <button
-                formAction={() => updateImage(previousImageIndex.toString())}
-                aria-label="Previous product image"
-                className={buttonClassName}
-              >
-                <ArrowLeftIcon className="h-5" />
-              </button>
-              <div className="mx-1 h-6 w-px bg-neutral-500"></div>
-              <button
-                formAction={() => updateImage(nextImageIndex.toString())}
-                aria-label="Next product image"
-                className={buttonClassName}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button>
-            </div>
+        {/* Subtle badge: image count */}
+        {images.length > 1 && (
+          <div
+            className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs backdrop-blur-sm"
+            style={{
+              backgroundColor: "rgba(250,247,242,0.85)",
+              color: "#888",
+              fontFamily: "var(--font-nobel)",
+              border: "1px solid rgba(204,153,102,0.2)",
+            }}
+          >
+            {imageIndex + 1} / {images.length}
           </div>
-        ) : null}
+        )}
       </div>
 
-      {images.length > 1 ? (
-        <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-auto py-1 lg:mb-0">
+      {/* ── Thumbnail strip ─────────────────────────────────────── */}
+      {images.length > 1 && (
+        <div className="flex gap-2 overflow-x-auto pb-1">
           {images.map((image, index) => {
             const isActive = index === imageIndex;
-
             return (
-              <li key={image.src} className="h-20 w-20">
-                <button
-                  formAction={() => updateImage(index.toString())}
-                  aria-label="Select product image"
-                  className="h-full w-full"
-                >
-                  <GridTileImage
-                    alt={image.altText}
-                    src={image.src}
-                    width={80}
-                    height={80}
-                    active={isActive}
+              <button
+                key={image.src}
+                type="button"
+                onClick={() => updateImage(index)}
+                aria-label={`View image ${index + 1}`}
+                className="relative flex-none overflow-hidden rounded-xl transition-all duration-200"
+                style={{
+                  width: "72px",
+                  height: "72px",
+                  border: isActive
+                    ? "2px solid #CC9966"
+                    : "2px solid rgba(204,153,102,0.2)",
+                  backgroundColor: "#FAF7F2",
+                  opacity: isActive ? 1 : 0.7,
+                  transform: isActive ? "scale(1.03)" : "scale(1)",
+                }}
+              >
+                <Image
+                  alt={image.altText || `Thumbnail ${index + 1}`}
+                  src={image.src}
+                  fill
+                  sizes="72px"
+                  className="object-contain p-1"
+                />
+                {/* Active glow overlay */}
+                {isActive && (
+                  <div
+                    className="absolute inset-0 rounded-xl"
+                    style={{ boxShadow: "inset 0 0 0 2px rgba(204,153,102,0.3)" }}
                   />
-                </button>
-              </li>
+                )}
+              </button>
             );
           })}
-        </ul>
-      ) : null}
-    </form>
+        </div>
+      )}
+
+      {/* ── Certification strip ─────────────────────────────────── */}
+      <div
+        className="mt-1 flex items-center justify-center gap-4 rounded-xl py-3"
+        style={{
+          backgroundColor: "rgba(204,153,102,0.06)",
+          border: "1px solid rgba(204,153,102,0.12)",
+        }}
+      >
+        {[
+          { icon: "✦", label: "Certified Organic" },
+          { icon: "◇", label: "Chemical Free" },
+          { icon: "○", label: "Farm to Table" },
+        ].map(({ icon, label }) => (
+          <div key={label} className="flex flex-col items-center gap-0.5">
+            <span style={{ color: "#CC9966", fontSize: "10px" }}>{icon}</span>
+            <span
+              className="text-[9px] uppercase tracking-[0.15em]"
+              style={{ color: "#AAA", fontFamily: "var(--font-nobel)" }}
+            >
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
