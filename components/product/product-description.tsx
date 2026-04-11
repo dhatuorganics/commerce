@@ -1,10 +1,11 @@
 import { Product } from "lib/shopify/types";
 import { Suspense } from "react";
 import { DynamicPrice } from "./dynamic-price";
+import { FeaturedReview } from "./featured-review";
 import { NutritionBadges } from "./nutrition-badges";
-import { VariantSelector } from "./variant-selector";
-import { ProductAddToCart } from "./product-add-to-cart";
 import { ProductAccordions } from "./product-accordions";
+import { ProductAddToCart } from "./product-add-to-cart";
+import { VariantSelector } from "./variant-selector";
 
 export function ProductDescription({ product }: { product: Product }) {
   const basePrice = product.priceRange.minVariantPrice;
@@ -164,6 +165,9 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>
         ))}
       </div>
+
+      {/* ── Top review — social proof before accordions ───────── */}
+      <FeaturedReview />
 
       {/* ── Accordions ────────────────────────────────────────── */}
       <ProductAccordions description={product.descriptionHtml} />
