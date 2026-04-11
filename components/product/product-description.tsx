@@ -9,8 +9,8 @@ import { ProductAccordions } from "./product-accordions";
 export function ProductDescription({ product }: { product: Product }) {
   const basePrice = product.priceRange.minVariantPrice;
 
-  /* Derive a display category from product type or first collection */
-  const categoryLabel = product.productType || "Organic Whole Food";
+  /* Derive a display category from tags or a fallback label */
+  const categoryLabel = product.tags[0] || "Organic Whole Food";
 
   return (
     <div className="flex flex-col">

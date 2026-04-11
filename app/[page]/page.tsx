@@ -74,9 +74,9 @@ export default async function ProductPage(props: {
         <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em]" style={{ fontFamily: "var(--font-nobel)", color: "#AAA" }}>
           <Link href="/" className="transition-colors hover:text-[#CC9966]">Home</Link>
           <span style={{ color: "#DDD" }}>›</span>
-          {product.productType && (
+          {product.tags[0] && (
             <>
-              <span style={{ color: "#CCC" }}>{product.productType}</span>
+              <span style={{ color: "#CCC" }}>{product.tags[0]}</span>
               <span style={{ color: "#DDD" }}>›</span>
             </>
           )}
