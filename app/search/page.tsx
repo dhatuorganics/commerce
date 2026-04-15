@@ -1,7 +1,8 @@
-import Grid from "components/grid";
+import FilterItemDropdown from "components/layout/search/filter/dropdown";
 import ProductGridItems from "components/layout/product-grid-items";
 import { defaultSort, sorting } from "lib/constants";
 import { getProducts } from "lib/shopify";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Search",
@@ -21,18 +22,34 @@ export default async function SearchPage(props: {
 
   return (
     <>
-      {searchValue ? (
-        <p className="mb-4">
-          {products.length === 0
-            ? "There are no products that match "
-            : `Showing ${products.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
-      ) : null}
+      {/* Header bar */}
+      <div className="mb-8 flex items-end justify-between gap-4 border-b border-neutral-200 pb-5 dark:border-neutral-700">
+        <div>
+          {searchValue ? (
+            <p className="text-lg text-[#1C1812] dark:text-white">
+              {products.length === 0
+                ? "No products match "
+                : `${products.length} ${resultsText} for `}
+              <span className="font-bold">&quot;{searchValue}&quot;</span>
+            </p>
+          ) : (
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#CC9966]">
+              All Products
+            </p>
+          )}
+        </div>
+        <div className="flex-none">
+          <Suspense fallback={null}>
+            <FilterItemDropdown list={sorting} />
+          </Suspense>
+        </div>
+      </div>
+
+      {/* Product grid */}
       {products.length > 0 ? (
-        <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">
           <ProductGridItems products={products} />
-        </Grid>
+        </ul>
       ) : null}
     </>
   );
